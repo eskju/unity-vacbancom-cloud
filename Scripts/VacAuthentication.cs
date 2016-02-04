@@ -36,9 +36,12 @@ public class VacAuthentication : MonoBehaviour
 	 */
 	void Start( )
 	{
+		GetComponent<VacViews>().ShowView( GetComponent<VacViews>().VIEW_AUTHENTICATE );
+
 		// find GameObjects and store references
 		this._inputSteamProfile = GameObject.Find( "Steam ID" ).GetComponent<InputField>();
 		this._inputSteamApiKey = GameObject.Find( "Steam API Key" ).GetComponent<InputField>();
+		GameObject.Find ("Version").GetComponent<Text> ().text = "v" + VacConfig.VERSION;
 
 		// load player preferences
 		this._inputSteamProfile.text = PlayerPrefs.GetString( "steam_id" );
@@ -74,7 +77,7 @@ public class VacAuthentication : MonoBehaviour
 	 * - hide error layer
 	 * - start authentication checks
 	 */
-	public void checkAuthentication( )
+	public void CheckAuthentication( )
 	{
 		// reset result checks
 		this.apiKeyOk = false;
@@ -86,6 +89,15 @@ public class VacAuthentication : MonoBehaviour
 		// start authentication checks
 		StartCoroutine( "CheckProfile" );
 		StartCoroutine( "CheckApiKey" );
+	}
+
+
+	/**
+	 * Start download for update
+	 */
+	public void OpenDownloadUrl( )
+	{
+		Application.OpenURL( "http://www.vac-ban.com/api/cloud/demo.zip" );
 	}
 
 
